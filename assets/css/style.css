@@ -29,6 +29,10 @@ html {
     margin-top: 4rem;
 }
 
+.max-width {
+    max-width: 1400px;
+}
+
 #state ul {
     list-style: none;
     padding: 0;
