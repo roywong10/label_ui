@@ -65,7 +65,7 @@
                 let html = $(
                     '<tr>\
                     <th scope="row">'+cur.index+'</th>\
-                    <td>n'+cur.label_name+'</td>\
+                    <td>'+cur.label_name+'</td>\
                     <td><button class="btn btn-primary">修改</button></td>\
                   </tr>'
                 )

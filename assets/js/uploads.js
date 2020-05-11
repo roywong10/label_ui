@@ -10,6 +10,7 @@
 
     // 用于记录当前的状态，所有的re-render都基于此state的更新
     const STATE = {
+        test : 'test is ok',
         top_labels : [],
         current_top_label : null,
         current_child_labels : []
@@ -35,6 +36,10 @@
                 cur.dom = html;
                 // 在 inputGroupSelect04下，添加所有label
                 $('#inputGroupSelect04').append(cur.dom);
+                cur.dom.on('click', function (e) {
+                    console.log('click is ok!')
+                    STATE.current_top_label = cur;                   
+                })
             });
         }    
     }
@@ -44,7 +49,6 @@
     // init 处理，获取top labels
     get_top_labels(get_top_labels_hanlder);
 
-    
 
     // ===============functions
     // 为每个label 构建一个类
@@ -82,12 +86,39 @@
     } 
 
 
+    // 一旦form提交，便提交至create_label的接口,实现创建label的操作
+    $("form").submit(function(e){
+    create_label();
+    });
+
+
     // ajax 获取当前页面的label信息，并提交至create_label的接口，实现创建label的操作
     function create_label(){
         let label_name = document.getElementById('input-label-name').value;
-        alert(label_name);
-        // 测试下有没有调用成功
-        console.log('create_label is OK!')
+        let parent_id = STATE.current_top_label.label_id;
+        let url = CONFIG.create_label_url;
+        let post_data = {
+            label_id: parent_id,
+            label_name : label_name
+        }
+        $.ajax({
+            url: url,
+            dataType: "json",
+            contentType: 'application/json',
+            type: "post",
+            error: function (xhr, status) {
+                if (typeof call_on_error === "function") {
+                    call_on_error(status);
+                }
+            },
+            success: function (jsonData, textStatus, xhr) {
+                if (typeof call_on_success === "function") {
+                    call_on_success(jsonData, textStatus, xhr);
+                }
+            }, 
+            data: JSON.stringify(post_data)
+        })
     }
-    //create_label();
+console.log(STATE.test)
+console.log(STATE.current_top_label.label_id)
 })()    
