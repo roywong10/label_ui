@@ -1,6 +1,6 @@
 
 (function(){
-    console.log('uploads is OK!');
+    
     const CONFIG = {
         api_url: 'http://127.0.0.1:4567',
         top_label_url : 'http://127.0.0.1:4567/label/get_top/v0.1',
@@ -26,21 +26,28 @@
 
         // ajax 获取成功
         if(xhr.status === 200){
-            // 清空top labels state
-            STATE.top_labels = []
-            // 对所有label进行处理
             jsonData.data.map((label, index) => {
                 let cur = new Label(label, index);
                 STATE.top_labels.push(cur);
+                //console.log(cur);
+
                 let html = $('<option value="'+index+'">'+cur.label_name+'</option>')
                 cur.dom = html;
                 // 在 inputGroupSelect04下，添加所有label
                 $('#inputGroupSelect04').append(cur.dom);
-                cur.dom.on('click', function (e) {
-                    console.log('click is ok!')
-                    STATE.current_top_label = cur;                   
-                })
             });
+            // 如果没有发生点击下拉框的事件，current_top_label默认为第一个label
+            STATE.current_top_label = jsonData.data[0];
+            // 当发生了点击下拉框，选中某个label时,current_top_label要做出对应的改变
+             $('#inputGroupSelect04').on('change', function(e) {
+                                    
+                    // 添加current_top_label
+                    let objs = document.getElementById("inputGroupSelect04");
+                    let index = objs.options[objs.selectedIndex].value;
+                    STATE.current_top_label = jsonData.data[index];
+                    console.log(STATE.current_top_label);
+                })
+
         }    
     }
 
@@ -95,23 +102,28 @@
     // ajax 获取当前页面的label信息，并提交至create_label的接口，实现创建label的操作
     function create_label(){
         let label_name = document.getElementById('input-label-name').value;
-        let parent_id = STATE.current_top_label.label_id;
+        let top_parent_id = STATE.current_top_label.label_id;
         let url = CONFIG.create_label_url;
         let post_data = {
-            label_id: parent_id,
-            label_name : label_name
+            parent: top_parent_id,
+            term_name : label_name
         }
+        // 查看下输入的数据是否正确
+         alert(top_parent_id + label_name);
+
         $.ajax({
             url: url,
             dataType: "json",
             contentType: 'application/json',
             type: "post",
             error: function (xhr, status) {
+                alert('error!')
                 if (typeof call_on_error === "function") {
                     call_on_error(status);
                 }
             },
             success: function (jsonData, textStatus, xhr) {
+                alert('success!')
                 if (typeof call_on_success === "function") {
                     call_on_success(jsonData, textStatus, xhr);
                 }
@@ -119,6 +131,5 @@
             data: JSON.stringify(post_data)
         })
     }
-console.log(STATE.test)
-console.log(STATE.current_top_label.label_id)
+
 })()    

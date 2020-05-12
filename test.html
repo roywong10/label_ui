@@ -1,12 +1,24 @@
-<!--HTML-->
-<form id='test_form' action='' method='' omsubmit='return checkForm()'>
-    <input type='text' name='username' value=''/>
-    <input type='password' name='pwd' id='pwd' value =''/>
-    <button type='submit'>提交<button/>
-<form/>
+<!DOCTYPE html>
 
-<script>
-function checkForm(){
-	alert('ok');
-}
-<script/>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <select id="pid" onchange="gradeChange()">
+        <option value="1">选项一</option>
+        <option value="2">选项二</option>
+    </select>
+
+    <script type="text/JavaScript">
+        function gradeChange() {
+            var objS = document.getElementById("pid");
+            var grade = objS.options[objS.selectedIndex].value;
+            alert(grade);
+        }
+    </script>
+
+
+</body>
+</html>
