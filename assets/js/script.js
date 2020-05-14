@@ -66,13 +66,23 @@
                     '<tr>\
                     <th scope="row">'+cur.index+'</th>\
                     <td>'+cur.label_name+'</td>\
-                    <td><button class="btn btn-primary">修改</button></td>\
+                    <td><button class="btn btn-primary"'+'id="btn"'+cur.index+'>修改</button></td>\
                   </tr>'
                 )
                 cur.dom = html;
                 // 逐个render child label
                 $('.label-list tbody').append(cur.dom);
+                cur.dom.on('click', function(e){
+                    const param = {
+                        label_id : cur.label_id
+                    }
+                    const params = JSON.stringify(param);
+                    localStorage.setItem('params', params);
+                    window.location.href="update.html";
+                })
+
             })
+
         }
     }
 
@@ -84,7 +94,7 @@
     
     // init 处理，获取top labels
     get_top_labels(get_top_labels_hanlder);
-    
+
 
 
     // ===============functions

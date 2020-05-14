@@ -9,40 +9,34 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="assets/bootstrap-4.3.1-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
-  <title>TI Label UI</title>
+  <title>TI Label update</title>
 </head>
 
 <body>
   <div class="container-fluid max-width">
     <div class="row mb-3 justify-content-center">
       <div class="col-12">
-        <h1>Label管理</h1>
+        <h1>Label更新</h1>
       </div>
+      <br>
+      <br>
+      <br>
       <div class="col-12">
-        <a  href="upload.html" class="btn btn-warning">
-          新增
-        </a>
+        <span id="label_name">label名称：</span>
       </div>
       <div class="col-12 mt-5">
+         <form>
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
-
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <table class="table label-list">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Label Name</th>
-                  <th scope="col">操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                
-              </tbody>
-            </table>
+          <div class="form-group">
+            <label for="input-label-name">Label Name</label>
           </div>
-        </div>
+                    
+
+          <button type="submit" class="btn btn-primary">提交</button>
+          <button class="btn btn-warning">取消</button>
+        </form>
+
+        
       </div>
     </div>
     <div class="row">
@@ -56,7 +50,8 @@
   <script src="assets/js/popper.min.js"></script>
   <script src="assets/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
   <script src="assets/js/common-tools.js"></script>
-  <script src="assets/js/script.js"></script>
+  <script src="assets/js/update.js"></script>
+
 </body>
 
 </html>
