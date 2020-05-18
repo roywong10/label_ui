@@ -18,6 +18,7 @@
         current_child_labels : []
     };
 
+
     // 创建一个事件 用户top label 切换后重新render child labels
     const current_top_label_change = new Event('label_change');
 
@@ -40,19 +41,41 @@
 // 成功获取label的信息之后，把信息展示在页面上
     let get_label_handler = (jsonData, textStatus, xhr) => {
         if(xhr.status === 200) {
-            let cur = new Label(jsonData.data);
-            // console.log(cur);
-            // console.log(jsonData.data.term.term_name);       
-            console.log(cur.label_name);
+            let cur = new Label(jsonData.data);    
             let html = $('<span>'+ cur.label_name + '</span>')    
                 cur.dom = html;
-                // 逐个render child label
                 $('#label_name').append(cur.dom);
+
+            cur.label_info.map((info, index) => {
+                let selector = '#'+info.key
+                $(selector).val(info.value);
+            })
+            
         }
     }
 
-// 获取页面上的label信息
 
+    // 把页面上的信息，整理成label_info的形式
+    // 一旦form提交，便提交至update_label的接口,实现更新label的操作
+    $("#submit").on('click',function(e){
+        alert('提交');
+        var form = document.getElementById("update-form");  
+        var label_info = [];  
+        var infos = form.getElementsByTagName('input');  
+        for (var j = 0; j < infos.length; j++){ 
+             // elements.push(tagElements[j]); 
+             label_info.push({"key":infos[j].name, "value":infos[j].value});
+             // alert(infos[j].name + infos[j].value);         
+         } 
+         
+         update_label_info(label_info);
+    })
+
+    //点击取消按钮
+    $("#cancel").on('click', function(e){
+        alert('取消');
+
+    })
 
 
 
@@ -63,7 +86,7 @@ get_label_info(get_label_handler);
 function get_label_info(call_on_success, call_on_error){
         let url = CONFIG.label_info_url;
         let post_data = {
-            label_id: param.label_id
+            label_id: param.label_id,
         }
         $.ajax({
             url: url,
@@ -85,10 +108,11 @@ function get_label_info(call_on_success, call_on_error){
     }
 
 // 用来更新label的信息
-function update_label_info(call_on_success, call_on_error){
+function update_label_info(new_label_info, call_on_success, call_on_error){
     let url = CONFIG.label_update_url;
         let post_data = {
-            label_info: label_info
+            label_id : param.label_id,
+            label_info: new_label_info
         }
         $.ajax({
             url: url,
@@ -109,9 +133,5 @@ function update_label_info(call_on_success, call_on_error){
         })
 
 }
-     
-
-    
-
 
 })()    
