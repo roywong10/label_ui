@@ -94,9 +94,28 @@
 
 
     // 一旦form提交，便提交至create_label的接口,实现创建label的操作
-    $("form").submit(function(e){
-    create_label();
+    $("#submit").on('click',function(e){
+        //先判断提交的信息是否为空：
+        let label_name = document.getElementById('input-label-name').value;
+        if (label_name.length == 0){
+            alert('label name 不能为空！');
+        }
+        else{
+            // alert('创建');
+            create_label();
+        }
     });
+
+    //点击取消按钮
+    $("#cancel").on('click', function(e){
+        alert('取消');
+
+    })
+
+    //点击新增按钮，跳转到新增top_label的页面
+    $("#new_top_label").on('click', function(e){
+        window.location.href="new_top_label.html";
+    })
 
 
     // ajax 获取当前页面的label信息，并提交至create_label的接口，实现创建label的操作
@@ -108,8 +127,7 @@
             parent: top_parent_id,
             term_name : label_name
         }
-        // 查看下输入的数据是否正确
-         alert(top_parent_id + label_name);
+
 
         $.ajax({
             url: url,

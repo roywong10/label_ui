@@ -66,7 +66,7 @@
                     '<tr>\
                     <th scope="row">'+cur.index+'</th>\
                     <td>'+cur.label_name+'</td>\
-                    <td><button class="btn btn-primary"'+'id="btn"'+cur.index+'>修改</button></td>\
+                    <td><button class="btn btn-primary"'+'id="btn"'+cur.index +'>修改</button></td>\
                   </tr>'
                 )
                 cur.dom = html;
