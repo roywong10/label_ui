@@ -58,14 +58,17 @@
     // 把页面上的信息，整理成label_info的形式
     // 一旦form提交，便提交至update_label的接口,实现更新label的操作
     $("#submit").on('click',function(e){
+        
         alert('提交');
         var form = document.getElementById("update-form");  
         var label_info = [];  
-        var infos = form.getElementsByTagName('input');  
+        var infos = form.getElementsByTagName('input');
+        var infos_2 = form.getElementsByTagName('textarea')  
         for (var j = 0; j < infos.length; j++){ 
-             // elements.push(tagElements[j]); 
-             label_info.push({"key":infos[j].name, "value":infos[j].value});
-             // alert(infos[j].name + infos[j].value);         
+             label_info.push({"key":infos[j].name, "value":infos[j].value});      
+         } 
+         for (var i = 0; i < infos_2.length; i++){ 
+             label_info.push({"key":infos_2[i].name, "value":infos_2[i].value});     
          } 
          
          update_label_info(label_info);
