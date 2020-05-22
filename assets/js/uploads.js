@@ -141,7 +141,7 @@
                 }
             },
             success: function (jsonData, textStatus, xhr) {
-                alert('success!')
+                alert('success!');
                 if (typeof call_on_success === "function") {
                     call_on_success(jsonData, textStatus, xhr);
                 }

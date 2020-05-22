@@ -59,7 +59,6 @@
     // 一旦form提交，便提交至update_label的接口,实现更新label的操作
     $("#submit").on('click',function(e){
         
-        alert('提交');
         var form = document.getElementById("update-form");  
         var label_info = [];  
         var infos = form.getElementsByTagName('input');
@@ -70,8 +69,8 @@
          for (var i = 0; i < infos_2.length; i++){ 
              label_info.push({"key":infos_2[i].name, "value":infos_2[i].value});     
          } 
-         
          update_label_info(label_info);
+
     })
 
     //点击取消按钮
@@ -103,6 +102,7 @@ function get_label_info(call_on_success, call_on_error){
             },
             success: function (jsonData, textStatus, xhr) {
                 if (typeof call_on_success === "function") {
+
                     call_on_success(jsonData, textStatus, xhr);
                 }
             }, 
@@ -128,6 +128,7 @@ function update_label_info(new_label_info, call_on_success, call_on_error){
                 }
             },
             success: function (jsonData, textStatus, xhr) {
+                alert("success");
                 if (typeof call_on_success === "function") {
                     call_on_success(jsonData, textStatus, xhr);
                 }

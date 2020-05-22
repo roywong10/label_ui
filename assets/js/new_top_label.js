@@ -16,7 +16,6 @@
             alert('label name 不能为空！');
         }
         else{
-            // alert('创建');
             create_label();
         }
     });
@@ -42,13 +41,13 @@
             contentType: 'application/json',
             type: "post",
             error: function (xhr, status) {
-                alert('error!')
+                alert('error!');
                 if (typeof call_on_error === "function") {
                     call_on_error(status);
                 }
             },
             success: function (jsonData, textStatus, xhr) {
-                alert('success!')
+                alert('success!');
                 if (typeof call_on_success === "function") {
                     call_on_success(jsonData, textStatus, xhr);
                 }
