@@ -94,7 +94,7 @@
 
 
     // 一旦form提交，便提交至create_label的接口,实现创建label的操作
-    $("#submit").on('click',function(e){
+    $("#new").on('click',function(e){
         //先判断提交的信息是否为空：
         let label_name = document.getElementById('input-label-name').value;
         if (label_name.length == 0){
@@ -114,7 +114,7 @@
 
     //点击新增按钮，跳转到新增top_label的页面
     $("#new_top_label").on('click', function(e){
-        window.location.href="new_top_label.html";
+        window.location.href="new_label_class.html";
     })
 
 

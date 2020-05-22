@@ -16,6 +16,10 @@
     // 创建一个事件 用户top label 切换后重新render child labels
     const current_top_label_change = new Event('label_change');
 
+    //按照升序排列
+    function up(x,y){
+        return Date.parse(x.created_date) - Date.parse(y.created_date);
+    }
     
     // ===============start here
     // 获取top label 的 处理
@@ -25,6 +29,7 @@
             // 清空top labels state
             STATE.top_labels = []
             // 逐个label进行处理
+
             jsonData.data.map((label, index) => {
                 let cur = new Label(label, index);
                 STATE.top_labels.push(cur);
@@ -59,6 +64,8 @@
         if(xhr.status === 200) {
             STATE.current_child_labels = []
             $('.label-list tbody').html('');
+            jsonData.data.sort(up);
+            console.log(jsonData.data);
             jsonData.data.map((label, index) => {
                 let cur = new Label(label, index);
                 STATE.current_child_labels.push(cur);
@@ -78,7 +85,7 @@
                     }
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);
-                    window.location.href="update.html";
+                    window.location.href="update_label.html";
                 })
 
             })
@@ -148,6 +155,7 @@
             },
             success: function (jsonData, textStatus, xhr) {
                 if (typeof call_on_success === "function") {
+                    jsonData.data.sort(up);
                     call_on_success(jsonData, textStatus, xhr);
                 }
             }, 

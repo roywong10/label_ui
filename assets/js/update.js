@@ -57,7 +57,7 @@
 
     // 把页面上的信息，整理成label_info的形式
     // 一旦form提交，便提交至update_label的接口,实现更新label的操作
-    $("#submit").on('click',function(e){
+    $("#update").on('click',function(e){
         
         var form = document.getElementById("update-form");  
         var label_info = [];  
@@ -123,6 +123,7 @@ function update_label_info(new_label_info, call_on_success, call_on_error){
             contentType: 'application/json',
             type: "post",
             error: function (xhr, status) {
+                alert("error");
                 if (typeof call_on_error === "function") {
                     call_on_error(status);
                 }

@@ -13,7 +13,7 @@
         //先判断提交的信息是否为空：
         let label_name = document.getElementById('input-label-name').value;
         if (label_name.length == 0){
-            alert('label name 不能为空！');
+            alert('label name 不能为空！！！！');
         }
         else{
             create_label();
@@ -47,8 +47,9 @@
                 }
             },
             success: function (jsonData, textStatus, xhr) {
-                alert('success!');
+                alert('success!');                
                 if (typeof call_on_success === "function") {
+                    
                     call_on_success(jsonData, textStatus, xhr);
                 }
             }, 
