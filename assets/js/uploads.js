@@ -52,7 +52,6 @@
 
     // 当label创建成功，跳转到新增信息页面
     let get_new_label_hanlder = (jsonData, textStatus, xhr) => {
-        alert('要跳转');
         // ajax 获取成功
         if(xhr.status === 200){
             const param = {
