@@ -76,6 +76,7 @@
     //点击取消按钮
     $("#cancel").on('click', function(e){
         alert('取消');
+        get_label_info(get_label_handler);
 
     })
 
