@@ -29,7 +29,6 @@
             jsonData.data.map((label, index) => {
                 let cur = new Label(label, index);
                 STATE.top_labels.push(cur);
-                //console.log(cur);
 
                 let html = $('<option value="'+index+'">'+cur.label_name+'</option>')
                 cur.dom = html;
@@ -47,6 +46,21 @@
                     STATE.current_top_label = jsonData.data[index];
                     console.log(STATE.current_top_label);
                 })
+
+        }    
+    }
+
+    // 当label创建成功，跳转到新增信息页面
+    let get_new_label_hanlder = (jsonData, textStatus, xhr) => {
+        alert('要跳转');
+        // ajax 获取成功
+        if(xhr.status === 200){
+            const param = {
+                        label_id : jsonData.data.label_id
+                    }
+                    const params = JSON.stringify(param);
+                    localStorage.setItem('params', params);
+                    window.location.href="update_label.html";
 
         }    
     }
@@ -75,7 +89,6 @@
     // ajax 获取api数据，并预留两个 callback 函数用于获取后的数据处理
     function get_top_labels(call_on_success, call_on_error){
         let url = CONFIG.top_label_url;
-        console.log('ajax get_top_labels is OK!')
         $.ajax({
             url: url,
             dataType: "json",
@@ -101,8 +114,9 @@
             alert('label name 不能为空！');
         }
         else{
-            // alert('创建');
-            create_label();
+            // 当提交的信息不为空时，创建label，并跳转页面
+            create_label(get_new_label_hanlder);
+
         }
     });
 
@@ -120,7 +134,7 @@
 
 
     // ajax 获取当前页面的label信息，并提交至create_label的接口，实现创建label的操作
-    function create_label(){
+    function create_label(call_on_success, call_on_error){
         let label_name = document.getElementById('input-label-name').value;
         let top_parent_id = STATE.current_top_label.label_id;
         let url = CONFIG.create_label_url;
