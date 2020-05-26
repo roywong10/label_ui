@@ -1,6 +1,22 @@
 
 (function(){
 
+    $("#first-discover-time").datetime({
+      type:"date",
+      value:[2020,5,26],
+      success:function(res){
+        console.log(res)
+      }
+    })
+
+    $("#latest-discover-time").datetime({
+      type:"date",
+      value:[2020,5,26],
+      success:function(res){
+        console.log(res)
+      }
+    })
+
     const param = JSON.parse(localStorage.params);
 
     const CONFIG = {

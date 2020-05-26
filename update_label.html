@@ -9,6 +9,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="assets/bootstrap-4.3.1-dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dateTime.css">
   <title>TI Label update</title>
 </head>
 
@@ -50,7 +51,7 @@
           </div>
           <div class="form-group">
             <label for="first-discover-time">首次发现时间</label>
-            <input class="form-control" id="first-discover-time" name="first-discover-time"/>
+            <input type="text" placeholder="请选择日期" id="first-discover-time">
           </div>
           <div class="form-group">
             <label for="latest-discover-time">末次发现时间</label>
@@ -68,13 +69,20 @@
             <label for="decryption">是否支持解密</label>
           
             <select class="custom-select" name="decryption" id="decryption">
+              <option value="unnecessary">不需要此字段</option>
               <option value="yes">是</option>
               <option value="no">否</option>
             </select>
           </div>
           <div class="form-group">
             <label for="currency-type">货币类型</label>
-            <input class="form-control" id="currency-type" name="currency-type"/>
+            <select class="custom-select" name="currency-type" id="currency-type">
+              <option value="unnecessary">不需要此字段</option>
+              <option value="Bitcoin">比特币</option>
+              <option value="Monero">门罗币</option>
+              <option value="Ether">以太币</option>
+              <option value="Litecoin">莱特币</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="zone-under-attack">攻击地区</label>
@@ -82,7 +90,39 @@
           </div>
           <div class="form-group">
             <label for="industry-under-attack">攻击行业</label>
-            <input class="form-control" id="industry-under-attack" name="industry-under-attack"/>
+             <select class="custom-select" name="industry-under-attack" id="industry-under-attack">
+              <option value="unnecessary">不需要此字段</option>
+              <option value="finance">金融业</option>
+              <option value="retail-business">零售业</option>
+              <option value="education">教育业</option>
+              <option value="medical">医疗业</option>
+              <option value="service-trade">服务业</option>
+              <option value="industry">工业</option>
+              <option value="manufacturing">制造业</option>
+              <option value="computer-industry">计算机</option>
+              <option value="internet-industry">互联网</option>
+              <option value="signal-communication">通信</option>
+              <option value="electronics">电子</option>
+              <option value="transportation">交通运输业</option>
+              <option value="logistics">物流业</option>
+              <option value="goverment">政府</option>
+              <option value="energy">能源业</option>
+              <option value="environment-protection">环保业</option>
+              <option value="agriculture">农业</option>
+              <option value="forestry">林业</option>
+              <option value="animal-husbandry">畜牧业</option>
+              <option value="fishery">渔业</option>
+              <option value="mining-industry">采矿业</option>
+              <option value="construction">建筑业</option>
+              <option value="supply-inustry">供应业</option>
+              <option value="warehousing-industry">仓储业</option>
+              <option value="catering">餐饮业</option>
+              <option value="real-estate">房地产业</option>
+              <option value="technical-service">技术服务业</option>
+              <option value="entertainment">娱乐业</option>
+              <option value="chemical-engineering">化工业</option>
+              <option value="scientific-research">科研业</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="advise">防护建议</label>
@@ -112,7 +152,18 @@
   <script src="assets/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
   <script src="assets/js/common-tools.js"></script>
   <script src="assets/js/update.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/dateTime.min.js"></script>
+<script>
+$("#first-discover-time").datetime({
+  type:"date",
+  value:[2019,9,31],
+  success:function(res){
+    console.log(res)
+  }
+})
 
+</script>
 </body>
 
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>jQuery点击Input框弹出日历代码 - 站长素材</title>
+
+<link rel="stylesheet" href="assets/css/dateTime.css">
+
+</head>
+<body>
+	<form>
+
+<div class="mycontainer">
+	<input type="text" placeholder="请选择日期" id="date">
+</div>
+</form>
+
+<script src="assets/jquery/jquery-3.4.1.min.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/dateTime.min.js"></script>
+
+<script>
+$("#date").datetime({
+	type:"date",
+	value:[2019,9,31],
+	success:function(res){
+		console.log(res)
+	}
+})
+
+</script>
