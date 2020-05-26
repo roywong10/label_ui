@@ -1,22 +1,16 @@
 
 (function(){
+    $(document).ready(function () {
+    $('.datepicker').datepicker({
+    format: 'yyyy-mm-dd'
+        });
+    });
+    
+    
+    // $(".datepicker").on('click',function(e){
+    //    alert('time');
 
-    $("#first-discover-time").datetime({
-      type:"date",
-      value:[2020,5,26],
-      success:function(res){
-        console.log(res)
-      }
-    })
-
-    $("#latest-discover-time").datetime({
-      type:"date",
-      value:[2020,5,26],
-      success:function(res){
-        console.log(res)
-      }
-    })
-
+    // })
     const param = JSON.parse(localStorage.params);
 
     const CONFIG = {
@@ -57,11 +51,8 @@
 // 成功获取label的信息之后，把信息展示在页面上
     let get_label_handler = (jsonData, textStatus, xhr) => {
         if(xhr.status === 200) {
-            let cur = new Label(jsonData.data);    
-            let html = $('<span>'+ cur.label_name + '</span>')    
-                cur.dom = html;
-                $('#label_name').append(cur.dom);
-
+            console.log(jsonData.data);
+            let cur = new Label(jsonData.data);
             cur.label_info.map((info, index) => {
                 let selector = '#'+info.key
                 $(selector).val(info.value);
@@ -78,12 +69,16 @@
         var form = document.getElementById("update-form");  
         var label_info = [];  
         var infos = form.getElementsByTagName('input');
-        var infos_2 = form.getElementsByTagName('textarea')  
+        var infos_2 = form.getElementsByTagName('textarea') 
+        var infos_3 = form.getElementsByTagName('select')  
         for (var j = 0; j < infos.length; j++){ 
              label_info.push({"key":infos[j].name, "value":infos[j].value});      
          } 
          for (var i = 0; i < infos_2.length; i++){ 
              label_info.push({"key":infos_2[i].name, "value":infos_2[i].value});     
+         } 
+         for (var m = 0; m < infos_3.length; m++){ 
+             label_info.push({"key":infos_3[m].name, "value":infos_3[m].value});     
          } 
          update_label_info(label_info);
 
