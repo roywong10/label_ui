@@ -12,6 +12,7 @@
 
     // })
     const param = JSON.parse(localStorage.params);
+    console.log(param);
 
     const CONFIG = {
         api_url: 'http://127.0.0.1:4567',
@@ -53,10 +54,13 @@
         if(xhr.status === 200) {
             console.log(jsonData.data);
             let cur = new Label(jsonData.data);
-            cur.label_info.map((info, index) => {
-                let selector = '#'+info.key
-                $(selector).val(info.value);
-            })
+            console.log(cur.label_name);
+            $('#label_name').append(cur.label_name);
+            if (cur.label_info != null) 
+            {cur.label_info.map((info, index) => {
+                            let selector = '#'+info.key
+                            $(selector).val(info.value);
+                        })}
             
         }
     }
@@ -70,10 +74,10 @@
         var label_info = [];  
         var infos = form.getElementsByTagName('input');
         var infos_2 = form.getElementsByTagName('textarea') 
-        var infos_3 = form.getElementsByTagName('select')  
-        for (var j = 0; j < infos.length; j++){ 
-             label_info.push({"key":infos[j].name, "value":infos[j].value});      
-         } 
+        var infos_3 = form.getElementsByTagName('select')
+        label_info.push({"key":"alias", "value":$('#alias').val()});  
+        label_info.push({"key":"first-discover-time", "value":$('#first-discover-time').val()});
+        label_info.push({"key":"latest-discover-time", "value":$('#latest-discover-time').val()});
          for (var i = 0; i < infos_2.length; i++){ 
              label_info.push({"key":infos_2[i].name, "value":infos_2[i].value});     
          } 
