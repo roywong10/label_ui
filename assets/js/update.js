@@ -56,17 +56,19 @@
             let cur = new Label(jsonData.data);
             console.log(cur.label_name);
             $('#label_name').append(cur.label_name);
-            if (cur.label_info != null) 
-            {cur.label_info.map((info, index) => {
+            if (cur.label_info != null) {
+                    cur.label_info.map((info, index) => {
                             let selector = '#'+info.key
                             $(selector).val(info.value);
                         })} 
             // /console.log(cur.label_info[9])
             //其中zone-under-attack和industry-under-attack是特殊字段
             //是selectpicker，需要特殊的显示方法
-            $('#zone-under-attack').selectpicker('val', cur.label_info[9].value);
-            $('#industry-under-attack').selectpicker('val', cur.label_info[10].value);
-
+            if (cur.label_info != null){
+                $('#zone-under-attack').selectpicker('val', cur.label_info[9].value);
+                $('#industry-under-attack').selectpicker('val', cur.label_info[10].value);
+            }
+            
         }
     }
 
