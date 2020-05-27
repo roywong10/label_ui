@@ -92,11 +92,54 @@
         label_info.push({"key":"zone-under-attack", "value":$('#zone-under-attack').val()});
         label_info.push({"key":"industry-under-attack", "value":$('#industry-under-attack').val()});
         label_info.push({"key":"advise", "value":$('#advise').val()}); 
-         console.log('提交的信息为：');
-         console.log(label_info);
-         update_label_info(label_info);
+
+         if (check_label_info(label_info)!= false){
+            console.log('提交的信息为：');
+            console.log(label_info);
+            update_label_info(label_info);
+         }
+         
 
     })
+    //校验更新的label_info是否正确
+    function check_label_info(label_info){
+        // 下面是判断时间
+        let to = new Date();
+        let today = to.getTime();
+
+        let first_day = new Date(label_info[3].value).getTime();
+        let lastest_day = new Date(label_info[4].value).getTime();
+
+        if (first_day > lastest_day){ 
+            alert('时间错误，首次发现的时间晚于末次发现的时间');
+            return false;
+        }
+
+        if(lastest_day > today){
+            alert('时间错误，末次发现时间不得晚于今天');
+            return false;
+        }
+
+        if(first_day > today){
+            alert('时间错误，首次发现时间不得晚于今天');
+            return false;
+        }
+        // 下面是判断多选框，是否同时选中‘不需要此字段’和其他选项
+        // 若同时选中，则返回false
+
+        let zone_info = label_info[9].value;
+        if (zone_info.length > 1 && zone_info.includes('unnecessary')){
+            alert('不能同时选中“不需要此字段”和其他字段');
+            return false;
+        }
+        let industry_info = label_info[10].value;
+        if (industry_info.length > 1 && industry_info.includes('unnecessary')){
+            alert('不能同时选中“不需要此字段”和其他字段');
+            return false;
+        }
+
+    }
+
 
     //点击取消按钮
     $("#cancel").on('click', function(e){
