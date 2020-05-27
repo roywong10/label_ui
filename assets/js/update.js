@@ -60,8 +60,13 @@
             {cur.label_info.map((info, index) => {
                             let selector = '#'+info.key
                             $(selector).val(info.value);
-                        })}
-            
+                        })} 
+            // /console.log(cur.label_info[9])
+            //其中zone-under-attack和industry-under-attack是特殊字段
+            //是selectpicker，需要特殊的显示方法
+            $('#zone-under-attack').selectpicker('val', cur.label_info[9].value);
+            $('#industry-under-attack').selectpicker('val', cur.label_info[10].value);
+
         }
     }
 
@@ -72,18 +77,21 @@
         
         var form = document.getElementById("update-form");  
         var label_info = [];  
-        var infos = form.getElementsByTagName('input');
-        var infos_2 = form.getElementsByTagName('textarea') 
-        var infos_3 = form.getElementsByTagName('select')
+        
+        label_info.push({"key":"introduction-ch", "value":$('#introduction-ch').val()});  
+        label_info.push({"key":"introduction-en", "value":$('#introduction-en').val()});
         label_info.push({"key":"alias", "value":$('#alias').val()});  
         label_info.push({"key":"first-discover-time", "value":$('#first-discover-time').val()});
         label_info.push({"key":"latest-discover-time", "value":$('#latest-discover-time').val()});
-         for (var i = 0; i < infos_2.length; i++){ 
-             label_info.push({"key":infos_2[i].name, "value":infos_2[i].value});     
-         } 
-         for (var m = 0; m < infos_3.length; m++){ 
-             label_info.push({"key":infos_3[m].name, "value":infos_3[m].value});     
-         } 
+        label_info.push({"key":"technical-detail", "value":$('#technical-detail').val()}); 
+        label_info.push({"key":"blackmail-detail", "value":$('#blackmail-detail').val()}); 
+        label_info.push({"key":"decryption", "value":$('#decryption').val()}); 
+        label_info.push({"key":"currency-type", "value":$('#currency-type').val()});  
+        label_info.push({"key":"zone-under-attack", "value":$('#zone-under-attack').val()});
+        label_info.push({"key":"industry-under-attack", "value":$('#industry-under-attack').val()});
+        label_info.push({"key":"advise", "value":$('#advise').val()}); 
+         console.log('提交的信息为：');
+         console.log(label_info);
          update_label_info(label_info);
 
     })

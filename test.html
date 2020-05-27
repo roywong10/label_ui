@@ -1,31 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+ 
 <head>
-<meta charset="UTF-8">
-<title>jQuery点击Input框弹出日历代码 - 站长素材</title>
-
-<link rel="stylesheet" href="assets/css/dateTime.css">
-
+    <meta charset="UTF-8">
+    <script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+ 
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+ 
+    <!-- (Optional) Latest compiled and minified JavaScript translation files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+    <title></title>
 </head>
-<body>
-	<form>
-
-<div class="mycontainer">
-	<input type="text" placeholder="请选择日期" id="date">
-</div>
-</form>
-
-<script src="assets/jquery/jquery-3.4.1.min.js"></script>
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/dateTime.min.js"></script>
-
-<script>
-$("#date").datetime({
-	type:"date",
-	value:[2019,9,31],
-	success:function(res){
-		console.log(res)
-	}
-})
-
-</script>
+ 
+<body >
+	llllllllll
+    <div class="form-group">
+        <!-- <div class="title">
+							可选择多个指标
+					</div> -->
+        <div class="centent1Select">
+            <select id="usertype" title="可选择多个指标" onchange="centent1SelectOnchang(this)"
+                class="selectpicker show-tick form-control" multiple data-live-search="false">
+                <option value="1">累计访问人数</option>
+                <option value="2">打开次数</option>
+                <option value="3">访问次数</option>
+                <option value="4">访问人数</option>
+                <option value="5">新访问人数</option>
+                <option value="6">平均访问深度</option>
+                <option value="7">次均停留时长</option>
+                <option value="8">总添加人数</option>
+                <option value="9">新添加人数</option>
+                <option value="10">删除添加人数</option>
+                <option value="11">分享次数</option>
+                <option value="12">分享人数</option>
+            </select>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#usertype').selectpicker({
+                'selectedText': 'cat'
+            });
+        });
+        //取出选择的任务执行人的方法
+        function centent1SelectOnchang() {
+            var val = "", staffs = [];
+            //循环的取出插件选择的元素(通过是否添加了selected类名判断)
+            for (var i = 0; i < $("li.selected").length; i++) {
+                val = $("li.selected").eq(i).find(".text").text();
+                if (val != '') {
+                    staffs.push(val);
+                }
+            }
+            console.log(staffs)
+ 
+        }
+    </script>
+</body>
+ 
+</html>
