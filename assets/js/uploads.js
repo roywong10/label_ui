@@ -44,7 +44,7 @@
                     let objs = document.getElementById("inputGroupSelect04");
                     let index = objs.options[objs.selectedIndex].value;
                     STATE.current_top_label = jsonData.data[index];
-                    console.log(STATE.current_top_label);
+                    
                 })
 
         }    

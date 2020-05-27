@@ -66,7 +66,6 @@
             STATE.current_child_labels = []
             $('.label-list tbody').html('');
             jsonData.data.sort(up);
-            console.log(jsonData.data);
             jsonData.data.map((label, index) => {
                 let cur = new Label(label, index);
                 STATE.current_child_labels.push(cur);

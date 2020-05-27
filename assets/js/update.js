@@ -12,7 +12,6 @@
 
     // })
     const param = JSON.parse(localStorage.params);
-    console.log(param);
 
     const CONFIG = {
         api_url: 'http://127.0.0.1:4567',
@@ -52,16 +51,14 @@
 // 成功获取label的信息之后，把信息展示在页面上
     let get_label_handler = (jsonData, textStatus, xhr) => {
         if(xhr.status === 200) {
-            console.log(jsonData.data);
             let cur = new Label(jsonData.data);
-            console.log(cur.label_name);
+            
             $('#label_name').append(cur.label_name);
             if (cur.label_info != null) {
                     cur.label_info.map((info, index) => {
                             let selector = '#'+info.key
                             $(selector).val(info.value);
                         })} 
-            // /console.log(cur.label_info[9])
             //其中zone-under-attack和industry-under-attack是特殊字段
             //是selectpicker，需要特殊的显示方法
             if (cur.label_info != null){
