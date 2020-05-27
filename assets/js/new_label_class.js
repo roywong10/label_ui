@@ -16,7 +16,7 @@
             alert('label name 不能为空！！！！');
         }
         else{
-            create_label();
+            create_label(get_new_label_class_hanlder);
         }
     });
 
@@ -27,9 +27,17 @@
 
     })
 
+    // 当label创建成功，跳转到新增信息页面
+    let get_new_label_class_hanlder = (jsonData, textStatus, xhr) => {
+        // ajax 获取成功
+        if(xhr.status === 200){
+            window.location.href="new_label.html";
+        }    
+    }
 
-    // ajax 获取当前页面的label信息，并提交至create_label的接口，实现创建label的操作
-    function create_label(){
+
+    // ajax 获取当前页面的label信息，并提交至create_label的接口，实现创建label_class的操作
+    function create_label(call_on_success, call_on_error){
         let label_name = document.getElementById('input-label-name').value;
         let url = CONFIG.create_label_url;
         let post_data = {
