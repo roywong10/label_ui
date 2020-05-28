@@ -2,9 +2,8 @@
 (function(){
     
     const CONFIG = {
-        api_url: 'http://127.0.0.1:4567',
-        top_label_url : 'http://127.0.0.1:4567/label/get_top/v0.1',
-        create_label_url : 'http://127.0.0.1:4567/label/create/v0.1',
+        top_label_url : label_origin+'/label/get_top/v0.1',
+        create_label_url : label_origin+'/label/create/v0.1',
 
     }
 
@@ -55,8 +54,7 @@
         // ajax 获取成功
         if(xhr.status === 200){
             const param = {
-                        label_id : jsonData.data.label_id,
-                        label_name : jsonData.data.term.term_name
+                        label_id : jsonData.data.label_id
                     }
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);

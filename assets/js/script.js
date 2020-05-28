@@ -1,5 +1,4 @@
 
-
 (function(){
     
     const CONFIG = {
@@ -81,8 +80,7 @@
                 $('.label-list tbody').append(cur.dom);
                 cur.dom.on('click', function(e){
                     const param = {
-                        label_id : cur.label_id,
-                        label_name : cur.label_name
+                        label_id : cur.label_id
                     }
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);
