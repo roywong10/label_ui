@@ -1,17 +1,23 @@
 
 (function(){
+    const param = JSON.parse(localStorage.params);
+
     $(document).ready(function () {
     $('.datepicker').datepicker({
     format: 'yyyy-mm-dd'
         });
     });
+
+    // 将label_name显示在页面上
+    $('#label_name').append(param.label_name);
+
     
     
     // $(".datepicker").on('click',function(e){
     //    alert('time');
 
     // })
-    const param = JSON.parse(localStorage.params);
+    
 
     const CONFIG = {
         api_url: 'http://127.0.0.1:4567',
@@ -52,8 +58,6 @@
     let get_label_handler = (jsonData, textStatus, xhr) => {
         if(xhr.status === 200) {
             let cur = new Label(jsonData.data);
-            
-            $('#label_name').append(cur.label_name);
             if (cur.label_info != null) {
                     cur.label_info.map((info, index) => {
                             let selector = '#'+info.key
