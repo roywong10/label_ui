@@ -1,3 +1,5 @@
+const label_origin = "http://127.0.0.1:4567"
+
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');

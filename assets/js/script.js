@@ -2,9 +2,8 @@
 (function(){
     
     const CONFIG = {
-        api_url: 'http://127.0.0.1:4567',
-        top_label_url : 'http://127.0.0.1:4567/label/get_top/v0.1',
-        children_label_url : 'http://127.0.0.1:4567/label/get_children/v0.1',
+        top_label_url : label_origin +'/label/get_top/v0.1',
+        children_label_url : label_origin +'/label/get_children/v0.1',
     }
 
     // 用于记录当前的状态，所有的re-render都基于此state的更新
