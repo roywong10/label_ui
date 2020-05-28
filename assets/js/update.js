@@ -52,7 +52,7 @@
         if(xhr.status === 200) {
             let cur = new Label(jsonData.data);
             
-            $('#label_name').append(cur.label_name);
+            $('#label_name').text(cur.label_name);
             if (cur.label_info != null) {
                     cur.label_info.map((info, index) => {
                             let selector = '#'+info.key
