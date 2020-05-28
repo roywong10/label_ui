@@ -2,9 +2,8 @@
 (function(){
     
     const CONFIG = {
-        api_url: 'http://127.0.0.1:4567',
-        top_label_url : 'http://127.0.0.1:4567/label/get_top/v0.1',
-        create_label_url : 'http://127.0.0.1:4567/label/create/v0.1',
+        top_label_url : label_origin+'/label/get_top/v0.1',
+        create_label_url : label_origin+'/label/create/v0.1',
 
     }
 
