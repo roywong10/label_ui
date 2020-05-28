@@ -55,8 +55,11 @@
         // ajax 获取成功
         if(xhr.status === 200){
             const param = {
-                        label_id : jsonData.data.label_id
+                        label_id : jsonData.data.label_id,
+                        label_name : jsonData.data.term.term_name
                     }
+                    console.log('param是：');
+                    console.log(param);
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);
                     window.location.href="update_label.html";

@@ -1,4 +1,5 @@
 
+
 (function(){
     
     const CONFIG = {
@@ -81,8 +82,11 @@
                 $('.label-list tbody').append(cur.dom);
                 cur.dom.on('click', function(e){
                     const param = {
-                        label_id : cur.label_id
+                        label_id : cur.label_id,
+                        label_name : cur.label_name
                     }
+                    console.log('param是');
+                    console.log(param);
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);
                     window.location.href="update_label.html";
