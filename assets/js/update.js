@@ -7,10 +7,6 @@
     });
     
     
-    // $(".datepicker").on('click',function(e){
-    //    alert('time');
-
-    // })
     const param = JSON.parse(localStorage.params);
 
     const CONFIG = {
@@ -141,6 +137,7 @@
     $("#cancel").on('click', function(e){
         alert('取消');
         get_label_info(get_label_handler);
+        window.location.href="index.html";
 
     })
 
@@ -198,6 +195,7 @@ function update_label_info(new_label_info, call_on_success, call_on_error){
                 if (typeof call_on_success === "function") {
                     call_on_success(jsonData, textStatus, xhr);
                 }
+                window.location.href="index.html";
             }, 
             data: JSON.stringify(post_data)
         })
