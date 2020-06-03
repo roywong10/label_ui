@@ -28,7 +28,6 @@
             jsonData.data.map((label, index) => {
                 let cur = new Label(label, index);
                 STATE.top_labels.push(cur);
-
                 let html = $('<option value="'+index+'">'+cur.label_name+'</option>')
                 cur.dom = html;
                 // 在 inputGroupSelect04下，添加所有label
@@ -56,7 +55,9 @@
             const param = {
                         label_id : jsonData.data.label_id,
                         label_name : jsonData.data.term.term_name,
-                        term_id : jsonData.data.term.term_id
+                        term_id : jsonData.data.term.term_id,
+                        parent : jsonData.data.parent.label_id,
+                        parent_name : jsonData.data.parent.term.term_name
                     }
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);

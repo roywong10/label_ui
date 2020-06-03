@@ -89,7 +89,9 @@
                     const param = {
                         label_id : cur.label_id,
                         label_name : cur.label_name,
-                        term_id : cur.term_id
+                        term_id : cur.term_id,
+                        parent_id : cur.parent,
+                        parent_name : cur.parent_name
                     } 
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);
@@ -142,6 +144,7 @@
             this.label_name = l.term.term_name;
             this.term_id = l.term.term_id;
             this.parent = l.parent == null ? null : l.parent.label_id;
+            this.parent_name = l.parent == null ? null : l.parent.term.term_name;
             this.created_date = l.created_date;
             this.modified_date = l.modified_date;
             this.dom = null;

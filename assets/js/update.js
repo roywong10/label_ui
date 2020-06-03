@@ -25,6 +25,44 @@
         current_child_labels : []
     };
 
+        // 获取top label 的 处理
+    let get_top_labels_hanlder = (jsonData, textStatus, xhr) => {
+        console.log('top label handler');
+        console.log(param.parent_id);
+
+        // ajax 获取成功
+        if(xhr.status === 200){
+            jsonData.data.map((label, index) => {
+                let cur = new Label(label, index);
+                STATE.top_labels.push(cur);
+
+                let html = $('<option value="'+index+'">'+cur.label_name+'</option>')
+                cur.dom = html;
+                // 在 label-class-select下，添加所有label
+                $('#label-class-select').append(cur.dom);
+            });
+            console.log(jsonData.data);
+            // 当发生了点击下拉框，选中某个label时,current_top_label要做出对应的改变
+
+             $('#label-class-select').on('change', function(e) {                                   
+                    // 添加current_top_label
+                    let objs = document.getElementById("label-class-select");
+                    let index = objs.options[objs.selectedIndex].value;
+                    STATE.current_top_label = jsonData.data[index];
+                    
+                })
+             // 当没有大声点击下拉框时，下拉框的内容为原有的parent name
+             console.log(param.parent_name);
+             for(let i = 0; i < jsonData.data.length; i++){
+                if(jsonData.data[i].term.term_name === param.parent_name){
+                    var class_index = i;
+                }
+             }
+             $('#label-class-select').val(class_index);
+
+        }    
+    }
+    get_top_labels(get_top_labels_hanlder);
 
     // 创建一个事件 用户top label 切换后重新render child labels
     const current_top_label_change = new Event('label_change');
@@ -40,6 +78,7 @@
             this.label_name = l.term.term_name;
             this.term_id = l.term.term_id;
             this.parent = l.parent == null ? null : l.parent.label_id;
+            this.parent_name = l.parent == null ? null : l.parent.term.term_name;
             this.created_date = l.created_date;
             this.modified_date = l.modified_date;
             this.dom = null;
@@ -52,6 +91,7 @@
             var cur = new Label(jsonData.data);
             
             $('#label-name').val(cur.label_name);
+            console.log('获取' + cur.parent_name);
             if (cur.label_info != null) {
                     cur.label_info.map((info, index) => {
                             let selector = '#'+info.key
@@ -186,9 +226,11 @@ function get_label_info(call_on_success, call_on_error){
 // 用来更新label的信息
 function update_label_info(new_label_info, call_on_success, call_on_error){
     let url = CONFIG.label_update_url;
+    let top_parent_id = STATE.current_top_label.label_id;
         let post_data = {
             label_id : param.label_id,
-            label_info: new_label_info
+            label_info : new_label_info,
+            parent: top_parent_id
         }
         $.ajax({
             url: url,
@@ -239,4 +281,22 @@ function update_term_name(_term_id, _term_name, call_on_success, call_on_error){
         })
 }
 
+// ajax 获取top label数据，也就是label class并预留两个 callback 函数用于获取后的数据处理
+function get_top_labels(call_on_success, call_on_error){
+    let url = CONFIG.top_label_url;
+    $.ajax({
+        url: url,
+        dataType: "json", 
+        error: function (xhr, status) {
+            if (typeof call_on_error === "function") {
+                call_on_error(status);
+            }
+        },
+        success: function (jsonData, textStatus, xhr) {           
+            if (typeof call_on_success === "function") {
+                call_on_success(jsonData, textStatus, xhr);
+            }
+        }
+    })
+} 
 })()    
