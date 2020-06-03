@@ -7,17 +7,15 @@
     });
     
     
-    // $(".datepicker").on('click',function(e){
-    //    alert('time');
-
-    // })
     const param = JSON.parse(localStorage.params);
 
     const CONFIG = {
         top_label_url : label_origin+'/label/get_top/v0.1',
         children_label_url : label_origin+'/label/get_children/v0.1',
         label_info_url : label_origin+'/label/get/v0.1',
-        label_update_url : label_origin+'/label/update/v0.1'
+        label_update_url : label_origin+'/label/update/v0.1',
+        term_update_url : label_origin+'/term/update/v0.1'
+
     }
 
     // 用于记录当前的状态，所有的re-render都基于此state的更新
@@ -40,6 +38,7 @@
             this.label_id = l.label_id;
             this.label_info = l.label_info;
             this.label_name = l.term.term_name;
+            this.term_id = l.term.term_id;
             this.parent = l.parent == null ? null : l.parent.label_id;
             this.created_date = l.created_date;
             this.modified_date = l.modified_date;
@@ -48,11 +47,11 @@
     }
 
 // 成功获取label的信息之后，把信息展示在页面上
-    let get_label_handler = (jsonData, textStatus, xhr) => {
+    var get_label_handler = (jsonData, textStatus, xhr) => {
         if(xhr.status === 200) {
-            let cur = new Label(jsonData.data);
+            var cur = new Label(jsonData.data);
             
-            $('#label_name').text(cur.label_name);
+            $('#label-name').val(cur.label_name);
             if (cur.label_info != null) {
                     cur.label_info.map((info, index) => {
                             let selector = '#'+info.key
@@ -75,7 +74,9 @@
         
         var form = document.getElementById("update-form");  
         var label_info = [];  
-        
+        label_name = $('#label-name').val();
+        console.log('label name');
+        console.log(label_name);
         label_info.push({"key":"introduction-ch", "value":$('#introduction-ch').val()});  
         label_info.push({"key":"introduction-en", "value":$('#introduction-en').val()});
         label_info.push({"key":"alias", "value":$('#alias').val()});  
@@ -88,11 +89,17 @@
         label_info.push({"key":"zone-under-attack", "value":$('#zone-under-attack').val()});
         label_info.push({"key":"industry-under-attack", "value":$('#industry-under-attack').val()});
         label_info.push({"key":"advise", "value":$('#advise').val()}); 
-
-         if (check_label_info(label_info)!= false){
+        // 当label name没有修改时，直接提交修改后的信息
+         if (check_label_info(label_info)!== false && label_name === param.label_name){
             console.log('提交的信息为：');
             console.log(label_info);
             update_label_info(label_info);
+         }
+         // 当label name修改后，要先更新term,再更新label
+         if (check_label_info(label_info)!== false && label_name !== param.label_name){
+            let term_id = param.term_id;
+            console.log('名字已修改！');
+            update_term_name(term_id, label_name,update_label_info(label_info));
          }
          
 
@@ -141,6 +148,7 @@
     $("#cancel").on('click', function(e){
         alert('取消');
         get_label_info(get_label_handler);
+        window.location.href="index.html";
 
     })
 
@@ -188,13 +196,14 @@ function update_label_info(new_label_info, call_on_success, call_on_error){
             contentType: 'application/json',
             type: "post",
             error: function (xhr, status) {
-                alert("error");
+                alert("error!");
                 if (typeof call_on_error === "function") {
                     call_on_error(status);
                 }
             },
             success: function (jsonData, textStatus, xhr) {
-                alert("success");
+                alert("success!");
+                window.location.href="index.html";
                 if (typeof call_on_success === "function") {
                     call_on_success(jsonData, textStatus, xhr);
                 }
@@ -202,6 +211,32 @@ function update_label_info(new_label_info, call_on_success, call_on_error){
             data: JSON.stringify(post_data)
         })
 
+}
+
+// 用来更新term的名字
+function update_term_name(_term_id, _term_name, call_on_success, call_on_error){
+        let url = CONFIG.term_update_url;
+        let post_data = {
+            term_id : _term_id,
+            term_name : _term_name
+        }
+        $.ajax({
+            url: url,
+            dataType: "json",
+            contentType: 'application/json',
+            type: "post",
+            error: function (xhr, status) {
+                if (typeof call_on_error === "function") {
+                    call_on_error(status);
+                }
+            },
+            success: function (jsonData, textStatus, xhr) {
+                if (typeof call_on_success === "function") {
+                    call_on_success(jsonData, textStatus, xhr);
+                }
+            }, 
+            data: JSON.stringify(post_data)
+        })
 }
 
 })()    

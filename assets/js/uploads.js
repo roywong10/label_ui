@@ -54,7 +54,9 @@
         // ajax 获取成功
         if(xhr.status === 200){
             const param = {
-                        label_id : jsonData.data.label_id
+                        label_id : jsonData.data.label_id,
+                        label_name : jsonData.data.term.term_name,
+                        term_id : jsonData.data.term.term_id
                     }
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);
@@ -77,6 +79,7 @@
             this.label_id = l.label_id;
             this.label_info = l.label_info;
             this.label_name = l.term.term_name;
+            this.term_id = l.term.term_id;
             this.parent = l.parent == null ? null : l.parent.label_id;
             this.created_date = l.created_date;
             this.modified_date = l.modified_date;
@@ -114,7 +117,6 @@
         else{
             // 当提交的信息不为空时，创建label，并跳转页面
             create_label(get_new_label_hanlder);
-
         }
     });
 
@@ -122,6 +124,7 @@
     $("#cancel").on('click', function(e){
         alert('取消');
         $("#input-label-name").val("");
+        window.location.href="index.html";
 
     })
 

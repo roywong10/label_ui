@@ -4,6 +4,8 @@
     const CONFIG = {
         top_label_url : label_origin +'/label/get_top/v0.1',
         children_label_url : label_origin +'/label/get_children/v0.1',
+        delete_label_url : label_origin +'/label/delete/v0.1',
+        delete_term_url : label_origin +'/term/delete/v0.1'
     }
 
     // 用于记录当前的状态，所有的re-render都基于此state的更新
@@ -20,11 +22,13 @@
     function up(x,y){
         return Date.parse(x.created_date) - Date.parse(y.created_date);
     }
+
     
     // ===============start here
     // 获取top label 的 处理
     let get_top_labels_hanlder = (jsonData, textStatus, xhr) => {
         // ajax 获取成功
+        console.log(jsonData);
         if(xhr.status === 200){
             // 清空top labels state
             STATE.top_labels = []
@@ -61,6 +65,7 @@
 
     // child label 获取成功后的处理
     let get_child_labels_handler = (jsonData, textStatus, xhr) => {
+        console.log(jsonData);
         if(xhr.status === 200) {
             STATE.current_child_labels = []
             $('.label-list tbody').html('');
@@ -72,19 +77,43 @@
                     '<tr>\
                     <th scope="row">'+cur.index+'</th>\
                     <td>'+cur.label_name+'</td>\
-                    <td><button class="btn btn-primary"'+'id="btn"'+cur.index +'>修改</button></td>\
+                    <td><button class="btn btn-primary"'+'id="update"'+cur.index +'>修改</button>\
+                    <button class="btn btn-warning"'+'id="delete"'+cur.index +'>删除</button></td>\
                   </tr>'
                 )
-                cur.dom = html;
-                // 逐个render child label
+                cur.dom = html;                
                 $('.label-list tbody').append(cur.dom);
+                // 点击修改或删除按钮
                 cur.dom.on('click', function(e){
+                    let target = e.target;
                     const param = {
-                        label_id : cur.label_id
-                    }
+                        label_id : cur.label_id,
+                        label_name : cur.label_name,
+                        term_id : cur.term_id
+                    } 
                     const params = JSON.stringify(param);
                     localStorage.setItem('params', params);
-                    window.location.href="update_label.html";
+                    // 点击删除按钮，要首先判断是否误点
+                    if(target.classList.contains('btn-warning')){
+                        let mymessage=confirm("确认删除？");
+                        if(mymessage==true)
+                        {
+                            console.log('删除！');
+                            console.log('label id');
+                            console.log(cur.label_id);
+                            console.log('term id');
+                            console.log(cur.term_id);
+                            delete_label(cur.label_id, cur.term_id);
+                            //
+
+                        } else {
+                            console.log('取消！');
+                        }
+                    }
+                    // 点击修改按钮，跳转至修改的页面
+                    if(target.classList.contains('btn-primary')){
+                        window.location.href="update_label.html";
+                    }                                                         
                 })
 
             })
@@ -111,6 +140,7 @@
             this.label_id = l.label_id;
             this.label_info = l.label_info;
             this.label_name = l.term.term_name;
+            this.term_id = l.term.term_id;
             this.parent = l.parent == null ? null : l.parent.label_id;
             this.created_date = l.created_date;
             this.modified_date = l.modified_date;
@@ -136,7 +166,7 @@
             }
         })
     } 
-
+    // ajax获取top label的孩子节点
     function get_children(parent_id, call_on_success, call_on_error){
         let url = CONFIG.children_label_url;
         let post_data = {
@@ -161,6 +191,58 @@
             data: JSON.stringify(post_data)
         })
     } 
+    // ajax删除label，要同时调用label和term的删除api，此时先删除label
+    function delete_label(_label_id, _term_id,call_on_success, call_on_error){
+        let url = CONFIG.delete_label_url;
+        let post_data = {
+            label_id: _label_id
+        }
+        $.ajax({
+            url: url,
+            dataType: "json",
+            contentType: 'application/json',
+            type: "post",
+            error: function (xhr, status) {
+                alert('error!');
+                if (typeof call_on_error === "function") {                    
+                    call_on_error(status);
+                }
+            },
+            success: function (jsonData, textStatus, xhr) {
+                delete_term(_term_id);
+                if (typeof call_on_success === "function") {                   
+                    call_on_success(jsonData, textStatus, xhr);
+                }
+            }, 
+            data: JSON.stringify(post_data)
+        })
+    }
+    // ajax删除term
+    function delete_term(_term_id, call_on_success, call_on_error){
+        let url = CONFIG.delete_term_url;
+        let post_data = {
+            term_id: _term_id
+        }
+        $.ajax({
+            url: url,
+            dataType: "json",
+            contentType: 'application/json',
+            type: "post",
+            error: function (xhr, status) {
+                if (typeof call_on_error === "function") {
+                    call_on_error(status);
+                }
+            },
+            success: function (jsonData, textStatus, xhr) {
+                alert('success!');
+                window.location.href="index.html";
+                if (typeof call_on_success === "function") {
+                    call_on_success(jsonData, textStatus, xhr);
+                }
+            }, 
+            data: JSON.stringify(post_data)
+        })
 
+    }
 
 })()    
