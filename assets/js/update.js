@@ -139,7 +139,6 @@
          // 当label name修改后，要先更新term,再更新label
          if (check_label_info(label_info)!== false && label_name !== param.label_name){
             let term_id = param.term_id;
-            console.log('名字已修改！');
             update_term_name(term_id, label_name,update_label_info(label_info));
          }
          
