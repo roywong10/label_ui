@@ -51,13 +51,14 @@
                     STATE.current_top_label = jsonData.data[index];
                     
                 })
-             // 当没有大声点击下拉框时，下拉框的内容为原有的parent name
+             // 当没有点击下拉框时，下拉框的内容为原有的parent name,current_top_label也是原来的
              console.log(param.parent_name);
              for(let i = 0; i < jsonData.data.length; i++){
                 if(jsonData.data[i].term.term_name === param.parent_name){
                     var class_index = i;
                 }
              }
+             STATE.current_top_label = jsonData.data[class_index];
              $('#label-class-select').val(class_index);
 
         }    
@@ -199,59 +200,60 @@ get_label_info(get_label_handler);
 
 // 用来获取label的信息
 function get_label_info(call_on_success, call_on_error){
-        let url = CONFIG.label_info_url;
-        let post_data = {
-            label_id: param.label_id,
-        }
-        $.ajax({
-            url: url,
-            dataType: "json",
-            contentType: 'application/json',
-            type: "post",
-            error: function (xhr, status) {
-                if (typeof call_on_error === "function") {
-                    call_on_error(status);
-                }
-            },
-            success: function (jsonData, textStatus, xhr) {
-                if (typeof call_on_success === "function") {
-
-                    call_on_success(jsonData, textStatus, xhr);
-                }
-            }, 
-            data: JSON.stringify(post_data)
-        })
+    let url = CONFIG.label_info_url;
+    let post_data = {
+        label_id: param.label_id,
     }
+    $.ajax({
+        url: url,
+        dataType: "json",
+        contentType: 'application/json',
+        type: "post",
+        error: function (xhr, status) {
+            if (typeof call_on_error === "function") {
+                call_on_error(status);
+            }
+        },
+        success: function (jsonData, textStatus, xhr) {
+            if (typeof call_on_success === "function") {
+
+                call_on_success(jsonData, textStatus, xhr);
+            }
+        }, 
+        data: JSON.stringify(post_data)
+    })
+}
 
 // 用来更新label的信息
 function update_label_info(new_label_info, call_on_success, call_on_error){
     let url = CONFIG.label_update_url;
     let top_parent_id = STATE.current_top_label.label_id;
-        let post_data = {
-            label_id : param.label_id,
-            label_info : new_label_info,
-            parent: top_parent_id
-        }
-        $.ajax({
-            url: url,
-            dataType: "json",
-            contentType: 'application/json',
-            type: "post",
-            error: function (xhr, status) {
-                alert("error!");
-                if (typeof call_on_error === "function") {
-                    call_on_error(status);
-                }
-            },
-            success: function (jsonData, textStatus, xhr) {
-                alert("success!");
-                window.location.href="index.html";
-                if (typeof call_on_success === "function") {
-                    call_on_success(jsonData, textStatus, xhr);
-                }
-            }, 
-            data: JSON.stringify(post_data)
-        })
+    var post_data = {
+        label_id : param.label_id,
+        label_info : new_label_info,
+        parent: top_parent_id
+    }
+        
+    $.ajax({
+        url: url,
+        dataType: "json",
+        contentType: 'application/json',
+        type: "post",
+        error: function (xhr, status) {
+            alert("error!");
+            if (typeof call_on_error === "function") {
+                call_on_error(status);
+            }
+        },
+        success: function (jsonData, textStatus, xhr) {
+            alert("success!");
+            window.location.href="index.html";
+            if (typeof call_on_success === "function") {
+                call_on_success(jsonData, textStatus, xhr);
+            }
+        }, 
+        data: JSON.stringify(post_data)
+    })
 
 }
 
